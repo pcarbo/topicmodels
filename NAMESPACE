@@ -10,6 +10,7 @@ importFrom("tm", "as.DocumentTermMatrix", "weightTf")
 
 importFrom("Matrix","sparseMatrix")
 importFrom("Matrix","rowSums")
+importFrom("Compositional","ddiri")
 
 export("LDA",
        "CTM",

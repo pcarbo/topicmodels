@@ -2,7 +2,7 @@ Package: topicmodels
 Type: Package
 Title: Topic Models
 Date: 2022-04-05
-Version: 0.2-16
+Version: 0.2-17
 Authors@R: c(person("Bettina", "Grün", role = c("aut", "cre"),
                     email = "Bettina.Gruen@R-project.org",
 		    comment = c(ORCID = "0000-0001-7265-4773")),
@@ -26,7 +26,7 @@ Description: Provides an interface to the C code for Latent Dirichlet
 	     for fitting LDA models using Gibbs sampling by Xuan-Hieu
 	     Phan and co-authors.
 Depends: R (>= 2.15.0)
-Imports: Matrix, stats4, methods, modeltools, slam, tm (>= 0.6)
+Imports: Matrix, stats4, methods, modeltools, Compositional, slam, tm (>= 0.6)
 Suggests: lasso2, lattice, lda, OAIHarvester, SnowballC,
         corpus.JSS.papers
 Additional_repositories: https://datacube.wu.ac.at
