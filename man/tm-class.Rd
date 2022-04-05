@@ -57,6 +57,9 @@
     \item{\code{loglikelihood}:}{Object of class \code{"numeric"}; the
       posterior likelihood of the corpus conditional on the topic
       assignments is returned.}
+    \item{\code{logposterior}:}{Log-posterior of the topic model
+                                parameters (not conditioned on the
+                                topic assignments).}
     \item{\code{alpha}:}{Object of class \code{"numeric"}; parameter of
       the Dirichlet distribution for topics over documents.}
   }

@@ -1,11 +1,15 @@
 useDynLib("topicmodels", .registration = TRUE, .fixes = "C_")
 
 import("methods")
+import("Matrix")
 importFrom("modeltools", "posterior")
 importFrom("stats", "terms", "sd", "coef")
 importFrom("stats4", "logLik")
 importFrom("slam", "as.simple_triplet_matrix", "row_sums", "simple_triplet_matrix")
 importFrom("tm", "as.DocumentTermMatrix", "weightTf")
+
+importFrom("Matrix","sparseMatrix")
+importFrom("Matrix","rowSums")
 
 export("LDA",
        "CTM",

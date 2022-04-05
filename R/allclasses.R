@@ -151,6 +151,7 @@ setClass("Gibbs",
 
 setClass("LDA_Gibbs",
          representation(seedwords = "ANY",
+                        logposterior = "numeric",
                         z = "integer"),
          contains = c("LDA", "Gibbs"),
          prototype(control = new("LDA_Gibbscontrol")))

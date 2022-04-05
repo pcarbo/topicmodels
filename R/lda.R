@@ -180,8 +180,17 @@ LDA_Gibbs.fit <- function(x, k, control = NULL, model = NULL, call, seedwords = 
                                ## initial model
                                obj[[i]][[j-1]]@beta,
                                obj[[i]][[j-1]]@z)
-        obj[[i]][[j]] <- new(class(obj[[i]][[j]]), obj[[i]][[j]], call = call, control = CONTROL_i, seedwords = seedwords,
-                             documents = x$dimnames[[1]], terms = x$dimnames[[2]], n = as.integer(sum(x$v)))
+        cat(j," ",sep = "")
+        logp <- sum(logposterior_multinom(x,t(exp(obj[[i]][[j]]@beta)),
+                                          obj[[i]][[j]]@gamma,control@alpha,
+                                          control@delta))
+        obj[[i]][[j]] <- new(class(obj[[i]][[j]]), obj[[i]][[j]],
+                             call = call, control = CONTROL_i,
+                             seedwords = seedwords,
+                             documents = x$dimnames[[1]],
+                             terms = x$dimnames[[2]],
+                             n = as.integer(sum(x$v)),
+                             logposterior = logp)
       }
       if (control@best) obj[[i]] <- obj[[i]][[which.max(sapply(obj[[i]], logLik))]]
     } else if (control@best) obj[[i]] <- obj[[i]][[1]]
