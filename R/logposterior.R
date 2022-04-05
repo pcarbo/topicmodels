@@ -1,8 +1,12 @@
 # Compute the log-posterior = log-likelihood + log-prior.
-logposterior_multinom <- function (x, F, L, alpha, delta, e = 1e-15) {
+logposterior_multinom <- function (x, F, L, alpha, delta, e = 1e-8) {
   x <- sparseMatrix(i = x$i,j = x$j,x = x$v,dims = c(x$nrow,x$ncol))
   return(loglik_multinom_const(x) - cost(x,L,t(F),e))
 }
+
+# TO DO: Make this more computationally efficient using C.
+cost <- function (X, A, B, e = 1e-8, version = c("R","cpp"))
+  -rowSums(X*log(A %*% B + e))
 
 # Compute the constant terms in the multinomial log-likelihoods.
 loglik_multinom_const <- function (x)
@@ -21,4 +25,3 @@ apply.nonzeros <- function (x, f) {
   d <- summary(x)
   return(sparseMatrix(i = d$i,j = d$j,x = f(d$x),dims = dim(x)))
 }
-

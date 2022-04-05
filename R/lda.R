@@ -153,8 +153,15 @@ LDA_Gibbs.fit <- function(x, k, control = NULL, model = NULL, call, seedwords = 
                            ## initial model
                            if (is.null(model)) NULL else model@beta,
                            if (is.null(model)) NULL else model@z))
-    obj[[i]][[1]] <- new(class(obj[[i]][[1]]), obj[[i]][[1]], call = call, control = CONTROL_i, seedwords = seedwords, 
-                         documents = x$dimnames[[1]], terms = x$dimnames[[2]], n = as.integer(sum(x$v)))
+      cat("1 ",sep = "")
+      logp <- sum(logposterior_multinom(x,t(exp(obj[[i]][[1]]@beta)),
+                                        obj[[i]][[1]]@gamma,control@alpha,
+                                        control@delta))
+    obj[[i]][[1]] <- new(class(obj[[i]][[1]]),obj[[i]][[1]],call = call,
+                         control = CONTROL_i,seedwords = seedwords, 
+                         documents = x$dimnames[[1]],terms = x$dimnames[[2]],
+                         n = as.integer(sum(x$v)),
+                         logposterior = logp)
     iterations <- unique(c(seq(CONTROL_i@iter, control@burnin + control@iter, by = control@thin),
                            control@burnin + control@iter))
     if (length(iterations) > 1) {
@@ -192,8 +199,10 @@ LDA_Gibbs.fit <- function(x, k, control = NULL, model = NULL, call, seedwords = 
                              n = as.integer(sum(x$v)),
                              logposterior = logp)
       }
-      if (control@best) obj[[i]] <- obj[[i]][[which.max(sapply(obj[[i]], logLik))]]
-    } else if (control@best) obj[[i]] <- obj[[i]][[1]]
+      if (control@best)
+        obj[[i]] <- obj[[i]][[which.max(sapply(obj[[i]], logLik))]]
+    } else if (control@best)
+        obj[[i]] <- obj[[i]][[1]]
   }    
   if (control@best) {
     MAX <- which.max(sapply(obj, logLik))
