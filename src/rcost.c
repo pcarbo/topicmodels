@@ -3,29 +3,37 @@
 
 // Implements core calculations for cost(X,A,B,e,version = "R") when X
 // is a sparse matrix.
-SEXP rcost (SEXP i, SEXP j, SEXP x, SEXP e) {
+SEXP rcost (SEXP np, SEXP mp, SEXP kp, SEXP ip, SEXP jp, SEXP xp, SEXP ep) {
   int     n;
-  int*    xi;
-  int*    xj;
+  int     m;
+  int     k;
+  int*    i;
+  int*    j;
   double  ab;
-  double  xe;
-  double* xx;
-  double* xy;
-  SEXP    y;
+  double  e;
+  double* x;
+  double* y;
+  SEXP    yp;
 
   // Set up access to the inputs.
-  i = PROTECT(coerceVector(i,INTSXP));
-  j = PROTECT(coerceVector(j,INTSXP));
-  x = PROTECT(coerceVector(x,REALSXP));
-  e = PROTECT(coerceVector(e,REALSXP));
-  xi = INTEGER(i);
-  xj = INTEGER(j);
-  xx = REAL(x);
-  xe = *REAL(e);
+  np = PROTECT(coerceVector(np,INTSXP));
+  mp = PROTECT(coerceVector(mp,INTSXP));
+  kp = PROTECT(coerceVector(kp,INTSXP));
+  ip = PROTECT(coerceVector(ip,INTSXP));
+  jp = PROTECT(coerceVector(jp,INTSXP));
+  xp = PROTECT(coerceVector(xp,REALSXP));
+  ep = PROTECT(coerceVector(ep,REALSXP));
+  n  = *INTEGER(np);
+  m  = *INTEGER(mp);
+  k  = *INTEGER(kp);
+  i  = INTEGER(ip);
+  j  = INTEGER(jp);
+  x  = REAL(xp);
+  e  = *REAL(ep);
 
   // Initialize the output.
-  y  = PROTECT(allocVector(REALSXP,1));
-  xy = REAL(y);
+  yp = PROTECT(allocVector(REALSXP,1));
+  y  = REAL(yp);
 
   // This is equivalent to the following R code:
   //
@@ -35,15 +43,16 @@ SEXP rcost (SEXP i, SEXP j, SEXP x, SEXP e) {
   // 
   //   ab = sum(A[i,] * B[,j])
   //
-  n = length(x);
-  *xy = 0;
+  n = length(xp);
+  *y = 0;
   for (int i = 0; i < n; i++) {
+    // ab = A * B.col(j);
     ab = 1;
-    *xy -= xx[i] * log(ab + xe);
+    *y -= x[i] * log(ab + e);
   }
 
-  UNPROTECT(5);
-  return y;
+  UNPROTECT(8);
+  return yp;
 }
 
 SEXP convolve2 (SEXP a, SEXP b) {

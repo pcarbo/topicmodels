@@ -16,8 +16,12 @@ cost <- function (X, A, B, e = 1e-8, version = c("R","cpp")) {
   if (is.matrix(X) | version == "R")
     y <- -rowSums(X*log(A %*% B + e))
   else {
+    n <- nrow(X)
+    m <- ncol(X)
+    k <- ncol(A)
     x <- summary(X)
-    y <- .Call(C_rcost,as.integer(x$i),as.integer(x$j),as.numeric(x$x),
+    y <- .Call(C_rcost,as.integer(n),as.integer(m),as.integer(k),
+               as.integer(x$i),as.integer(x$j),as.numeric(x$x),
                as.numeric(e))
   }
   return(y)
