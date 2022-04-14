@@ -8,12 +8,14 @@ extern SEXP rGibbslda(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP,
 		      SEXP, SEXP, SEXP, SEXP);
 extern SEXP rctm(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
 extern SEXP rlda(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP);
+extern SEXP rcost (SEXP, SEXP, SEXP, SEXP);
 extern SEXP convolve2 (SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
     {"rGibbslda", (DL_FUNC) &rGibbslda, 13},
     {"rctm",      (DL_FUNC) &rctm,       9},
     {"rlda",      (DL_FUNC) &rlda,       9},
+    {"rcost",     (DL_FUNC) &rcost,      4},
     {"convolve2", (DL_FUNC) &convolve2,  2},
     {NULL, NULL, 0}
 };

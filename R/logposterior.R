@@ -9,14 +9,16 @@ logposterior_multinom <- function (x, F, L, alpha, delta, e = 1e-8) {
          + sum(ddiri(t(F),rep(delta,m),logged = TRUE)))
 }
 
-# TO DO: Implement version = "cpp".
+# Computes loss function equal to negative log-likelihood, ignoring
+# terms that do not depend on F and L.
 cost <- function (X, A, B, e = 1e-8, version = c("R","cpp")) {
   version <- match.arg(version)
   if (is.matrix(X) | version == "R")
     y <- -rowSums(X*log(A %*% B + e))
   else {
-    x <- rnorm(10)
-    y <- .Call(C_rcost(as.numeric(x)))
+    x <- summary(X)
+    y <- .Call(C_rcost,as.integer(x$i),as.integer(x$j),as.numeric(x$x),
+               as.numeric(e))
   }
   return(y)
 }
