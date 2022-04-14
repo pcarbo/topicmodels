@@ -20,6 +20,8 @@ SEXP rcost (SEXP np, SEXP mp, SEXP kp, SEXP ip, SEXP jp, SEXP xp,
   double* x;
   double* a;
   double* b;
+  double* ai;
+  double* bj;
   double* y;
   SEXP    yp;
 
@@ -62,8 +64,10 @@ SEXP rcost (SEXP np, SEXP mp, SEXP kp, SEXP ip, SEXP jp, SEXP xp,
     it = i[t];
     jt = j[t];
     ab = 0;
+    ai = a + it*K;
+    bj = b + jt*K;
     for (k = 0; k < K; k++)
-      ab += a[it*K + k] * b[jt*K + k];
+      ab += ai[k] * bj[k];
     y[it] -= x[t] * log(ab + e);
   }
 
