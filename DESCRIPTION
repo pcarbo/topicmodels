@@ -1,8 +1,8 @@
 Package: topicmodels
 Type: Package
 Title: Topic Models
-Date: 2022-04-05
-Version: 0.2-17
+Date: 2022-04-09
+Version: 0.2-18
 Authors@R: c(person("Bettina", "Grün", role = c("aut", "cre"),
                     email = "Bettina.Gruen@R-project.org",
 		    comment = c(ORCID = "0000-0001-7265-4773")),
@@ -36,3 +36,4 @@ Encoding: UTF-8
 LazyLoad: yes
 NeedsCompilation: yes
 Maintainer: Bettina Grün <Bettina.Gruen@R-project.org>
+RoxygenNote: 7.1.2

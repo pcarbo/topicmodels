@@ -12,10 +12,11 @@ logposterior_multinom <- function (x, F, L, alpha, delta, e = 1e-8) {
 # TO DO: Implement version = "cpp".
 cost <- function (X, A, B, e = 1e-8, version = c("R","cpp")) {
   version <- match.arg(version)
-  if (version == "R")
+  if (is.matrix(X) | version == "R")
     y <- -rowSums(X*log(A %*% B + e))
   else {
-    # TO DO.
+    x <- rnorm(10)
+    y <- .Call(C_rcost(as.numeric(x)))
   }
   return(y)
 }
